@@ -1,4 +1,5 @@
-import stocks_data from '../../data/stock_data.js';
+
+// import stocks_data from '../../data/stock_data.js';    //no longer used
 
 
 const state ={
@@ -41,8 +42,15 @@ const actions = {
     //     commit('SET_STOCKS', stocks_data)   //get data source in an async way
     // },
     
-    initStocks:(context)=>{
-        context.commit('SET_STOCKS', stocks_data)   //get data source in an async way
+    
+    // method 1: get data from json file
+    // initStocks:(context)=>{
+    //     context.commit('SET_STOCKS', stocks_data)   //get data source in an async way
+    // },
+    
+    // method2: get stocks from firebase
+    initStocks:({commit}, stocksFromFirebase)=>{
+        commit('SET_STOCKS', stocksFromFirebase)   //get data source in an async way
     },
 
     randomizeStocks:({commit}) => {

@@ -12,14 +12,22 @@
 
 <script>
     import Stock from './Stock.vue'
+    import {mapGetters} from 'vuex';
     export default {
         components:{
           appStock:Stock  
         },
         computed:{
-            existing_stocks(){
-                return this.$store.getters.getStocks;
-            }
+            
+            // method1 : retrieve stocks using mapGetters
+            ...mapGetters({
+                existing_stocks:'getStocks'
+            })
+            
+            // // method2 : retrieve stocks using this.$store.getters.xxxxxx
+            // existing_stocks(){
+            //     return this.$store.getters.getStocks;
+            // }
         }
         // data:function(){
         //     return {

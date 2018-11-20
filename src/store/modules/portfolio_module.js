@@ -11,7 +11,8 @@ const state ={
 const getters ={
     stockPortfolio: (state, getters) => {
         return state.portfolio_Stock.map(stock => {
-            const record = getters.getStocks.find(el => el.stockID === stock.stockID)
+            const record = getters.getStocks.find(el => el.stockID === stock.stockID)     //return the stocks in a list where  
+
             return {
                 stockID: stock.stockID,
                 quantity: stock.quantity,
@@ -21,6 +22,12 @@ const getters ={
             }
         });
     },
+    
+    // // short and neat version but wrong, price not synced automatically
+    // stockPortfolio: (state) => {
+    //     return state.portfolio_Stock
+    // },
+    
     funds: (state)  =>{
         return state.funds
     }
@@ -40,26 +47,54 @@ const mutations ={
     // 'RND_STOCKS' (state){
     //     //
     // }
-    'BUT_STOCK'(state, {stockID, quantity, stockPrice, stockName}){
+    
+    
+    // 'BUT_STOCK'(state, {stockID, quantity, stockPrice, stockName}){
+    //     // array.find() only returns one matched elemenet in an array
+    //     const record = state.portfolio_Stock.find(element => element.stockID === stockID);
+    //     if (record) {
+    //         record.quantity += quantity
+    //     }else{
+    //         state.portfolio_Stock.push({
+    //             stockID:stockID,
+    //             quantity:quantity,
+    //             stockName:stockName,
+    //             stockPrice:stockPrice
+    //         })
+    //     }
+        
+    //     // subtract money invested on new stock from the existing funds
+    //     state.funds -= stockPrice * quantity;
+    //     // state.funds -= 
+    //     // console.log(stockPrice);
+
+    // },
+    
+    
+    // trying
+    'BUT_STOCK'(state, order){
         // array.find() only returns one matched elemenet in an array
-        const record = state.portfolio_Stock.find(element => element.stockID === stockID);
+        const record = state.portfolio_Stock.find(element => element.stockID === order.stockID);
         if (record) {
-            record.quantity += quantity
+            record.quantity += order.quantity
         }else{
             state.portfolio_Stock.push({
-                stockID:stockID,
-                quantity:quantity,
-                stockName:stockName,
-                stockPrice:stockPrice
+                stockID:order.stockID,
+                quantity:order.quantity,
+                stockName:order.stockName,
+                stockPrice:order.stockPrice
             })
         }
         
         // subtract money invested on new stock from the existing funds
-        state.funds -= stockPrice * quantity;
+        state.funds -= order.stockPrice * order.quantity;
         // state.funds -= 
         // console.log(stockPrice);
 
     },
+    
+    
+    
     'SELL_STOCK'(state, {stockID:stockID, quantity:quantity, stockPrice:stockPrice, stockName:stockName}){    //key-value pair , syntax before es5
         const record = state.portfolio_Stock.find(el => el.stockID === stockID);
         if (record.quantity > quantity) {
@@ -76,17 +111,19 @@ const mutations ={
         state.funds = funds;
     },
     'SET_PORTFOLIO'(state, portfolioStocks){
-        
-        portfolioStocks.forEach((stock) =>{
-            console.log(stock)
-            
-            state.portfolio_Stock.push({
-                stockID:stock.stockID,
-                quantity:stock.quantity,
-                stockName:stock.stockName,
-                stockPrice:stock.stockPrice
+        if (portfolioStocks) {
+            portfolioStocks.forEach((stock) =>{
+                console.log(stock)
+                
+                state.portfolio_Stock.push({
+                    stockID:stock.stockID,
+                    quantity:stock.quantity,
+                    stockName:stock.stockName,
+                    stockPrice:stock.stockPrice
+                })
             })
-        })
+        }
+        
     }
 }
 

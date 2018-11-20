@@ -35,7 +35,7 @@
             // $ dollar sign = stuff already access from main.js
             
             // trigger action method with dispatch
-            this.$store.dispatch('initStocks');    
+            // this.$store.dispatch('initStocks');    //already moved to axios get request function -- retrieve stocks from firebase
             
 
             // get firebase data
@@ -64,7 +64,7 @@
                 
                 this.$store.dispatch('initFunds', response.data.funds)
                 this.$store.dispatch('initPortfolio', response.data.stockPortfolio)
-                
+                this.$store.dispatch('initStocks', response.data.stocks);
             })
 
             // console.log(this.firebase_data)

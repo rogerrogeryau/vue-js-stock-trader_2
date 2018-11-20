@@ -49,7 +49,7 @@
                 
                 console.log(buyOrder)
                 this.$store.dispatch('buyStock', buyOrder)
-                this.quantity = 0;
+                this.quantity = 0; //clear quantity
                 
             }
         },
