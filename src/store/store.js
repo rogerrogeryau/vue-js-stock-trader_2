@@ -10,7 +10,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     modules:{
-        stocks_module,
+        stocks_module: stocks_module,   //either one of the two declaration methods works well
         portfolio_module
     }
 });  
